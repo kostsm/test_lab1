@@ -3,27 +3,15 @@ language:
 
 before_install:
   - pip install --user cpp-coveralls
-  
-addons:
-  sonarcloud:
-    organization: "kostsm"
-    token:
-      secure: "GhRZ4pJvjRPhiHU2NC3T7XIcoYEFoU1In//KIEh1jU8kdJFSLA0cA32oSYXjKgaDLdwVxXQ5TBhgiMwRsqsuTIz7dxUxtQUQSxRVYS5QTCXFwV7AkxIWn9uoTCkyD+XchGUgGMdHiEb2PmsoMFORA2XHPLgqRtxy+6YHAmGJUc6ayKTd0X4U8+s37t4JmiYS4gJY3MxNeYp9H7ORJB6Yn17Pkac42xRmYYJMJxxXwvDlbY0tLzmLLqY2YrDwkEOIe+BkBizHnSs6lWzW6qXXqAL7f5bzIDSpT7NELCCd0//B5pFYzsLmbHVAspDAxYSIABMN5KkBD8OP2PHrri8i7/V2llPU7Ow1UZlALcrckkKIvDzdAEXM0rW3sPVE11sfxM0RclNoqEYSjrZdnD2dw1kAzEs2NIB5caWkncaHtOOBr6QU9HAG/fJB/2suBkdN/PK5elcmaVRfIvktLpZUBidK1kvYRO49aWolS54V18/+/zJTYOiD/x+nc9LQARBGh2auu02Bu0YPnOELWZ/ni7mu+Zrnl+5Vd32Sd0CgCC6850oCW2dsc36eEs5IzhW+sJhU2WBi0q1BiDiUG5S9RZ7R3yY55nXSVmWTRlMXSNBSGUgwulJsMnS2mkLVu2Fx5N4zVmzxanLvvqa8Bgp9Py+rrTV5tJHjCjxYYYDGkWw="
 
 script:
   - qmake
   - make
   - ./tests/tests
-  # Wraps the compilation with the Build Wrapper to generate configuration (used
-  # later by the SonarScanner) into the "bw-output" folder
-  - build-wrapper-linux-x86-64 --out-dir bw-output make clean all
-  # And finally run the SonarCloud analysis - read the "sonar-project.properties"
-  # file to see the specific configuration
-  - sonar-scanner -Dsonar.cfamily.build-wrapper-output=bw-output
+  
 
 after_success:
   - coveralls --root . -E ".*external.*" -E ".*tests.*"
 
 notifications:
   email: false
-
