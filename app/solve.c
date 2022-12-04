@@ -1,29 +1,26 @@
 #include "solve.h"
 #include <math.h>
+#include <stdio.h>
 
-solves solve (double a, double b, double c)
+solves solve (double a, double b, char operation)
 {
-    solves result;
-    result.x1 = 0;
-    result.x2 = 0;
-    result.count = 0;
+    solves answer;
+    answer.result = 0;
+    answer.message = "ok";
 
-    if (a == 0 && b == 0) return result;
-
-    if (a == 0 && b != 0) {
-        result.count = 1;
-        result.x1 = (-c)/b;
-        return result;
+    if (operation == '+')
+        answer.result = a + b;
+    if (operation == '-')
+        answer.result = a - b;
+    if (operation == '*')
+        answer.result = a * b;
+    if (operation == '/')
+    {
+        if (b == 0)
+            answer.message = "error";
+        else
+            answer.result = a / b;
     }
-
-    double d = b*b - 4*a*c;
-    if (d < 0) return result;
-
-    if (d == 0) result.count = 1;
-    else result.count = 2;
-
-    result.x1 = (-b - sqrt(d))/(2*a);
-    result.x2 = (-b + sqrt(d))/(2*a);
-
-    return result;
+    printf("%s", answer.message);
+    return answer;
 }

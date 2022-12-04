@@ -2,11 +2,10 @@
 #define SOLVE_H
 
 typedef struct _solves {
-    double x1;
-    double x2;
-    int count;
+    double result;
+    char* message;
 } solves;
 
-solves solve (double a, double b, double c);
+solves solve (double a, double b, char operation);
 
 #endif // SOLVE_H
